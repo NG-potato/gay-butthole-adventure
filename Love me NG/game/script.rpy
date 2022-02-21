@@ -1,6 +1,6 @@
 ﻿# The script of the game goes in this file.
 
-label character_tut:
+##label character_tut:
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 #to define the label use "define".
@@ -10,13 +10,13 @@ label character_tut:
 
 # The game starts here.
 #sprites need to be named "character attribute"
-label start_tut:
+##label start_tut:
 
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
 
-label sprites_tut:
+##label sprites_tut:
 #this is basic way to show dialogue per scene.
 #    "character" "dialogue goes here"
 #    show #character #modifier
@@ -26,7 +26,7 @@ label sprites_tut:
 #   "Zone" "I Love tentacles!"
 #   show zone excited
 
-label scene_tut:
+##label scene_tut:
 #scene is defined by keyword "scene"
 #"bg" designates the background image for it. uses same naming convention as sprite
 #with defines actions for the label. Can be used with fade, fadeout, and wipe
@@ -40,11 +40,11 @@ label scene_tut:
 #   scene bg gym
 #   with fade
 
-label sounds_tut:
+##label sounds_tut:
 #"play sound "filelocation"" can be used to add sound effects.
 #unlike music will not loop.
 
-label choices_tut:
+##label choices_tut:
 #choices are defined by adding under "menu:" doing a break, then adding choices in ""s
 #"jump" defines where to move next after a choice is made. It will poiunt to the label.
 #an example is below
@@ -67,31 +67,41 @@ label choices_tut:
 
 #CODE START!
 
-label characters:
+#Characters
+define mc = Character(_('MC-kun'), color="#ffffff")
+define steve = Character(_('Steve'), color="#ff0000")
+define pico = Character(_('Pico'), color="#0000ff")
+define test = Character(_('\"The Dev\"'), color="#1951BB")
 
-define MC = Character("MC-kun")
-define Steve = Character("Steve")
-#, color"#ff0000"
-define Pico = Character("Pico")
-#, color"#0000ff"
-define Test = Character("Zone")
-#, color"#cc8899"
+#Music
+define audio.bgm1 = "music/bgm1.mp3"
 
-label test:
-Play music "audio/test_1.mp3"
-scene bg testbg
-with fade
-show test character
-Play sound "audio/dialogue/test_1.mp3"
-"Zone" "Masturbation and porn is for simps!"
-#menu :
-#"Go to next test"
-#jump test2
-#"Return to start"
-#jump test
-
-#label test2:
-#scene bg testbg2
-#menu :
-#"Return to start"
-#jump test
+label start:
+    play music bgm1 volume 0.05
+    scene bg testbg
+    show dev1
+    with fade
+    voice "voice/test_1.mp3"
+    test "Hey buddy! If you can see this right now then the game's prototype is working. Hooray!"
+    hide dev1
+    show dev2
+    voice "voice/test_2.mp3"
+    test "We don't have much going on besides conversational capabilities..."
+    show dev2 at left
+    with move 
+    show mc1 at right
+    with moveinright
+    voice "voice/test_4r.mp3"
+    mc "I'm a huge faggot!"
+    hide dev2
+    show dev3 at left
+    voice "voice/test_3.mp3"
+    test "You said it."
+    hide mc1 at right
+    with moveoutright
+    show dev3 at center
+    with move
+    hide dev3
+    show dev2
+    voice "voice/test_5.mp3"
+    test "This has been your captain speaking. Until then!"

@@ -2,17 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 73: invalid syntax
-    Character "Steve"
-                     ^
-
-File "game/script.rpy", line 75: invalid syntax
-    Character "Pico"
-                    ^
-
-File "game/script.rpy", line 77: invalid syntax
-    Character "Zone"
-                    ^
+File "game/script.rpy", line 97: expected statement.
+    vpunch
+          ^
 
 Ren'Py Version: Ren'Py 7.4.11.2266
-Fri Feb 18 18:06:40 2022
+Sun Feb 20 22:25:00 2022
