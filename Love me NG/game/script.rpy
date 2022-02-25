@@ -70,7 +70,7 @@
 #Characters
 define mc = Character(_('MC-kun'), color="#ffffff")
 define steve = Character(_('Steve'), color="#ff0000")
-define pico = Character(_('Pico'), color="#0000ff")
+define pico = Character(_('Pico'), color="#bb7d19")
 define test = Character(_('\"The Dev\"'), color="#1951BB")
 
 #Music
