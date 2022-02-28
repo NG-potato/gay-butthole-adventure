@@ -23,7 +23,7 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "1.0"
+define config.version = "1.1"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -49,6 +49,12 @@ define build.name = "LovemeNG"
 define config.has_sound = True
 define config.has_music = True
 define config.has_voice = True
+
+## To make Ren'Py automatically play voices, set config.auto_voice to a string 
+## containing {id}. When dialogue occurs, {id} is replaced with the dialogue 
+## identifier, forming a filename. If the filename exists, it is played.
+
+define config.auto_voice = "voice/{id}.mp3"
 
 
 ## To allow the user to play a test sound on the sound or voice channel,
