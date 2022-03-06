@@ -5,13 +5,15 @@ init python:
         return Character(_(name), color=col, image=tag, voice_tag=tag)
 
 
-define timer_jump = 0
-define time = 0
-
 # this code decreases variable time by 0.01 until time hits 0, at which point, 
 # the game jumps to label timer_jump (timer_jump is another variable that will be defined later)
+define timer_jump = 0
+define time = 0
 screen countdown:
     timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[Jump(timer_jump)]) 
+
+# for mutable scenes like running into pico and steve, we need a scene variable instead of hardcoding it
+define in_between_scene = ""
 
 #Characters
 #???
@@ -129,9 +131,12 @@ label walking:
 #Classroom encounters
 label cla:
     if all(collage_pieces_classroom):
-        jump devmenu
+        $ in_between_scene = "bg classroom_fixed"
+        jump surprise_meeting
+
     scene bg classroom_fixed
     with fade
+
     menu:
         "Ah, the good old classroom. An absolute must-have in any school-themed visual novel."
         "Anyways...\nPieces: [collage_pieces_classroom]"
@@ -227,7 +232,9 @@ label bbi:
 #Library encounters
 label lib:
     if all(collage_pieces_library):
-        jump devmenu
+        $ in_between_scene = "bg library"
+        jump surprise_meeting
+
     scene bg library
     with fade
     menu:
@@ -343,9 +350,12 @@ label gloom:
 #Roof encounters
 label rf:
     if all(collage_pieces_roof):
-        jump devmenu
+        $ in_between_scene = "bg roof"
+        jump surprise_meeting
+
     scene bg roof
     with fade
+
     menu:
         "The delinquents should be hanging out up here, as usual. I hope they won't be any trouble."
         "Anyways...\nPieces: [collage_pieces_roof]"
@@ -441,6 +451,24 @@ label herra:
 
     jump rf
 
+label surprise_meeting:
+    $ renpy.scene()
+    $ renpy.show(in_between_scene)
+    with fade
+
+    $ finished_rooms = sum([1 if all(i) else 0 for i in total])
+
+    if finished_rooms == 1:
+        "pico scene"
+    elif finished_rooms == 2:
+        "steve scene"
+    elif finished_rooms == 3:
+        "pico & steve scene"
+
+    "end of surprise scene"
+
+    jump devmenu
+
 label second_part:
     scene bg hallway
     with fade
@@ -482,19 +510,19 @@ label lovemenu_slow:
             jump choose_trash
 
 label choose_steve:
-    show bg prom_collage_fixed
+    scene bg prom_collage_fixed
     with fade
     "Steve ending"
     jump the_end
 
 label choose_pico:
-    show bg prom_collage_fixed
+    scene bg prom_collage_fixed
     with fade
     "Pico ending"
     jump the_end
 
 label choose_trash:
-    show bg prom_collage_fixed
+    scene bg prom_collage_fixed
     with fade
     "Trash ending"
     jump the_end
