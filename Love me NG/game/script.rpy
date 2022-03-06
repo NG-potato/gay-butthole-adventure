@@ -1,78 +1,92 @@
 ﻿#CODE START!
 
+init python:
+    def new_char(name, col, tag):
+        return Character(_(name), color=col, image=tag, voice_tag=tag)
+
+
+define timer_jump = 0
+define time = 0
+
+# this code decreases variable time by 0.01 until time hits 0, at which point, 
+# the game jumps to label timer_jump (timer_jump is another variable that will be defined later)
+screen countdown:
+    timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[Jump(timer_jump)]) 
+
 #Characters
+#???
+define u = new_char("???", "#f22a19", "mc")
+#familiar voice
+define fv = new_char("A Familiar Voice", "#1957BB", "trash")
+
 #mc
-define mc = Character(_('MC-kun'), color="#f22a19", image="mc", voice_tag="mc")
+define mc = new_char("MC-kun", "#f22a19", "mc")
 #pico
-define p = Character(_('Pico'), color="#1957BB", image="pico", voice_tag="pico")
+define p = new_char("Pico", "#1957BB", "pico")
 #steve
-define s = Character(_('Steve'), color="#1957BB", image="steve", voice_tag="steve")
+define s = new_char("Steve", "#1957BB", "steve")
+#trash
+define t = new_char("Trash-can", "#1957BB", "trash")
 
 #Classroom
 #mj
-define mj = Character(_('MJ'), color="#ff0000", image="mj", voice_tag="mj")
+define mj = new_char("MJ", "#eef3ff", "mj")
 #slimy
-define slimy = Character(_('Slimy'), color="#1957BB", image="slimy", voice_tag="slimy")
+define slimy = new_char("Slimy", "#1957BB", "slimy")
 #bbi
-define bbi = Character(_('BBi'), color="#FD5DA8", image="bbi", voice_tag="bbi")
+define bbi = new_char("BBi", "#FD5DA8", "bbi")
 
 #Library
 #spook
-define spook = Character(_('Spook'), color="#bb7d19", image="spook", voice_tag="spook")
+define spook = new_char("Spook", "#bb7d19", "spook")
 #louis
-define louis = Character(_('Louis'), color="#1957BB", image="louis", voice_tag="louis")
+define louis = new_char("Louis", "#1957BB", "louis")
 #cat
-define cat = Character(_('Cat'), color="#FF0066", image="cat", voice_tag="cat")
+define cat = new_char("Cat", "#FF0066", "cat")
 #gloom
-define gloom = Character(_('Gloom'), color="#FF6172", image="gloom", voice_tag="gloom")
+define gloom = new_char("Gloom", "#FF6172", "gloom")
 
 #Roof
 #moxxy
-define moxxy = Character(_('Moxxy'), color="#A117F2", image="moxxy", voice_tag="moxxy")
+define moxxy = new_char("Moxxy", "#A117F2", "moxxy")
 #neko
-define neko = Character(_('Neko, Bancho of NG High'), color="#5c0012", image="neko", voice_tag="neko")
+define neko = new_char("Neko", "#5c0012", "neko")
 #herra
-define herra = Character(_('Herra'), color="#1957BB", image="herra", voice_tag="herra")
+define herra = new_char("Herra", "#1957BB", "herra")
 
 #Music
 define audio.bgm1 = "music/bgm1.mp3"
+define audio.gay = "music/I'm gay btw not sure if that matters.mp3"
 
 #BG scaling fixes
-image bg path_fixed = im.Scale("images/bg path.jpg", 1280, 720)
-image bg prom_collage_fixed = im.Scale("images/bg prom.png", 1280, 720)
-image bg classroom_fixed = im.Scale("images/bg classroom.png", 1280, 720)
-image bg dev_fixed = im.Scale("images/bg testbg.jpg", 1280, 720)
+image bg path_fixed = im.Scale("images/bg path.webp", 1280, 720)
+image bg prom_collage_fixed = im.Scale("images/bg promcollage.webp", 1280, 720)
+image bg classroom_fixed = im.Scale("images/bg classroom.webp", 1280, 720)
+image bg dev_fixed = im.Scale("images/bg testbg.webp", 1280, 720)
 
 
 #Collage
-define collage_pieces_classroom = [0,0,0]
-define collage_pieces_roof = [0,0,0]
-define collage_pieces_library = [0,0,0,0]
-define total = [collage_pieces_classroom, collage_pieces_library, collage_pieces_roof]
-define collage = [0,0,0,0,0,0,0,0,0,0]
+default collage_pieces_classroom = [0,0,0]
+default collage_pieces_roof = [0,0,0]
+default collage_pieces_library = [0,0,0,0]
+default total = [collage_pieces_classroom, collage_pieces_library, collage_pieces_roof]
 
+#this is mainly used to play music and stuff at the beginning
 label start:
     play music bgm1 volume 0.05
-
-    jump devmenu
-
-label devor(x = 0):
-    if all(total[x]):
-        jump devmenu
-    else:
-        if x == 0:
-            jump cla
-        if x == 1:
-            jump lib
-        if x == 2:
-            jump rf
 
 label devmenu:
     scene bg testbg
     with fade
 
     menu:
-        "Where to first...\nPieces: [collage]"
+        "Where to first...\nPieces: [total]"
+
+        "Morning":
+            jump morning
+
+        "To school":
+            jump walking
 
         "Classroom":
             jump cla
@@ -84,16 +98,38 @@ label devmenu:
             jump lib
 
         "wincon":
-            $ collage_pieces_classroom = [1,1,1]
-            $ collage_pieces_roof = [1,1,1]
-            $ collage_pieces_library = [1,1,1,1]
-            $ collage = [1,1,1,1,1,1,1,1,1,1]
+            $ for i, x in enumerate(collage_pieces_library): collage_pieces_library[i] = 1
+            $ for i, x in enumerate(collage_pieces_roof): collage_pieces_roof[i] = 1
+            $ for i, x in enumerate(collage_pieces_classroom): collage_pieces_classroom[i] = 1
             jump devmenu
 
-        "The End" if all(collage):
-            return
+        "reset":
+            $ for i, x in enumerate(collage_pieces_library): collage_pieces_library[i] = 0
+            $ for i, x in enumerate(collage_pieces_roof): collage_pieces_roof[i] = 0
+            $ for i, x in enumerate(collage_pieces_classroom): collage_pieces_classroom[i] = 0
+            jump devmenu
 
+        "The End" if all([1 if all(i) else 0 for i in total]):
+            jump second_part
+
+label morning:
+    show bg bedroom
+    with fade
+
+    "morning scene"
+    jump devmenu
+
+label walking:
+    show bg path_fixed
+    with fade
+
+    "walking to school"
+    jump devmenu
+
+#Classroom encounters
 label cla:
+    if all(collage_pieces_classroom):
+        jump devmenu
     scene bg classroom_fixed
     with fade
     menu:
@@ -112,7 +148,86 @@ label cla:
         "Back":
             jump devmenu
 
+label mj:
+    scene bg classroom_fixed
+
+    show mj suntalk at right
+    with easeinright
+
+    mj "hi kid im Michael Jackson how can i help you today"
+
+    show mc nervous at left
+    with easeinleft
+
+    mc "Erm… hi."
+    mc "Well you know White Day is today right? I don’t have any gift prepared yet."
+    mc happy "But I heard that you were part of the school project! Could I have your piece?"
+
+    mj confused "id k what you are talking about dude i have not been to school since 2009 you must be tripping from the Ligma"
+
+    mc nervous "Where did your glasses go?"
+
+    mj submit "ok im just messing with you my buddy pal guy dude friend check this out"
+
+    $ collage_pieces_classroom[0] = 1
+
+    mc happy "Oh wow! Now I can finally **** **** in my **** with some **** all over ******************! Thank you Michael Jackson!"
+
+    mj point "live 2 love brother"
+
+    jump cla
+
+label slimy:
+    scene bg classroom_fixed
+    show mc nervous at left 
+    with easeinleft
+
+    mc "Hey Slimy so I was maybe wondering if you could possibly maybe"
+
+    show slimy talking at right
+    with easeinright
+
+    slimy "Stop."
+    slimy "I’m busy right now so I’ll make this quick."
+    slimy submit "If I give you this will you piss off?"
+
+    mc happy "Yeah!"
+
+    $ collage_pieces_classroom[1] = 1
+
+    slimy "Good."
+    slimy talkingalt "Just keep the weird **** in the broom closet during the dance or whatever."
+
+    jump cla
+
+label bbi:
+    scene bg classroom_fixed
+    show mc worried at left
+
+    mc "Sleeping during school hours again? Get off the Doxylamine already."
+
+    show bbi sleepy at right
+    with easeinright
+
+    bbi "what the hell MC bro that was my NASA nap whats your deal ??"
+
+    mc bashful "Well I heard you took part in the collaboration project."
+
+    bbi talking "eeh i think so, yea, so what ???"
+
+    mc shy "I just REALLY need it now for an emergency present for White Day, can you please let me have it?"
+
+    $ collage_pieces_classroom[2] = 1
+
+    bbi talkingalt "awww baby girl forgot their present for the white day ?? you suck lol"
+    bbi submit "here ya go pal it got washed couple of times with my sweater but i hope itll still get you nice and penetrated hehe <33"
+
+    jump cla
+
+#Library encounters
 label lib:
+    if all(collage_pieces_library):
+        jump devmenu
     scene bg library
     with fade
     menu:
@@ -134,110 +249,9 @@ label lib:
         "Back":
             jump devmenu
 
-label rf:
-    scene bg roof
-    with fade
-    menu:
-        "The delinquents should be hanging out up here, as usual. I hope I won’t get my face kicked in."
-        "Anyways...\nPieces: [collage_pieces_roof]"
-
-        "Moxxy":
-            jump moxxy
-
-        "Neko":
-            jump neko
-
-        "Herra":
-            jump herra
-
-        "Back":
-            jump devmenu
-
-#Classroom encounters
-label mj:
-    scene bg classroom_fixed
-    show mc neutral at left
-    with fade
-
-    show mj suntalk at right
-    with easeinright
-
-    mj "hi kid im Michael Jackson how can i help you today"
-
-    mc @ nervous "Erm… hi."
-    mc "Well you know White Day is today right? I don’t have any gift prepared yet."
-    mc happy "But I heard that you were part of the school project! Could I have your piece?"
-
-    mj confused "id k what you are talking about dude i have not been to school since 2009 you must be tripping from the Ligma"
-
-    mc nervous "Where did your glasses go?"
-
-    mj submit "ok im just messing with you my buddy pal guy dude friend check this out"
-
-    $ collage_pieces_classroom[0] = 1
-    $ collage[0] = 1
-
-    mc happy "Oh wow! Now I can finally **** **** in my **** with some **** all over ******************! Thank you Michael Jackson!"
-
-    mj point "live 2 love brother"
-
-    call devor(0)
-
-label slimy:
-    scene bg classroom_fixed
-    show mc nervous at left 
-    with fade 
-
-    mc "Hey Slimy so I was maybe wondering if you could possibly maybe"
-
-    show slimy talking at right
-    with easeinright
-
-    slimy "Stop."
-    slimy "I’m busy right now so I’ll make this quick."
-    slimy submit "If I give you this will you piss off?"
-
-    mc happy "Yeah!"
-
-    $ collage_pieces_classroom[1] = 1
-    $ collage[1] = 1
-
-    slimy "Good."
-    slimy talkingalt "Just keep the weird **** in the broom closet during the dance or whatever."
-
-    call devor(0)
-
-label bbi:
-    scene bg classroom_fixed
-    show mc worried at left
-    with fade
-
-    mc "Sleeping during school hours again? Get off the Doxylamine already."
-
-    show bbi sleepy at right
-    with easeinright
-
-    bbi "what the hell MC bro that was my NASA nap whats your deal ??"
-
-    mc bashful "Well I heard you took part in the collaboration project."
-
-    bbi talking "eeh i think so, yea, so what ???"
-
-    mc shy "I just REALLY need it now for an emergency present for White Day, can you please let me have it?"
-
-    $ collage_pieces_classroom[2] = 1
-    $ collage[2] = 1
-
-    bbi talkingalt "awww baby girl forgot their present for the white day ?? you suck lol"
-    bbi submit "here ya go pal it got washed couple of times with my sweater but i hope itll still get you nice and penetrated hehe <33"
-
-    call devor(0)
-
-#Library encounters
 label spook:
     scene bg library
     show mc neutral at left
-    with fade
 
     show spook talking at right
     with easeinright
@@ -253,16 +267,14 @@ label spook:
     spook submit "If it’s for love, no cost is too great! Here you go."
 
     $ collage_pieces_library[0] = 1
-    $ collage[3] = 1
 
     spook talking "Remember to keep yourself hydrated!"
 
-    call devor(1)
+    jump lib
 
 label louis:
     scene bg library
     show mc neutral at left
-    with fade
 
     show louis placeholder at right
     with easeinright
@@ -280,22 +292,19 @@ label louis:
     mc neutral "No."
 
     $ collage_pieces_library[1] = 1
-    $ collage[4] = 1
 
     louis "Okay..."
 
-    call devor(1)
+    jump lib
 
 label cat:
     scene bg library
     show mc neutral at left
-    with fade
 
     show cat talking at right
     with easeinright
 
     $ collage_pieces_library[2] = 1
-    $ collage[5] = 1
 
     cat submitalt "Sup MC-kun, here’s the project piece."
 
@@ -308,18 +317,16 @@ label cat:
 
     cat talkingalt "Anytime."
 
-    call devor(1)
+    jump lib
 
 label gloom:
     scene bg library
     show mc neutral at left
-    with fade
 
     show gloom placeholder at right
     with easeinright
 
     $ collage_pieces_library[3] = 1
-    $ collage[6] = 1
 
     gloom "Nothing written yet."
 
@@ -331,42 +338,61 @@ label gloom:
 
     gloom "No worries, have a good one."
 
-    call devor(1)
+    jump lib
 
 #Roof encounters
+label rf:
+    if all(collage_pieces_roof):
+        jump devmenu
+    scene bg roof
+    with fade
+    menu:
+        "The delinquents should be hanging out up here, as usual. I hope they won't be any trouble."
+        "Anyways...\nPieces: [collage_pieces_roof]"
+
+        "Moxxy":
+            jump moxxy
+
+        "Neko":
+            jump neko
+
+        "Herra":
+            jump herra
+
+        "Back":
+            jump devmenu
+
 label moxxy:
     scene bg roof
     show mc neutral at left
-    with fade
+    with easeinleft
 
     mc "Moxxy."
     mc "Moxxy?"
     mc "Moxxy!"
 
-    show moxxy talking at right 
+    show moxxy surprised at right 
     with vpunch
     with easeinright
 
     moxxy "!!"
-    moxxy "Next time you're gonna sneak up on me don't do it when I'm eating, it's a real choking hazard you know."
+    moxxy talking "Next time you're gonna sneak up on me don't do it when I'm eating, it's a real choking hazard you know."
     moxxy talkingalt "So what's up?"
 
     mc happy "Can I have your piece of the big project? Without it I’ll never find true love!"
 
     $ collage_pieces_roof[0] = 1
-    $ collage[7] = 1
 
     moxxy "Well if it helps you find true love at that lousy dance tonight then sure."
     moxxy submit "If it doesn't... at least you'll have a cool doodle from your friend Mox right?"
 
     mc "Thanks, you're the best!"
 
-    call devor(2)
+    jump rf
 
 label neko:
     scene bg roof
     show mc worried at left
-    with fade
 
     mc "{i}It’s the bancho of NG High! I better be respectful or I’ll get my teeth kicked in...{/i}"
 
@@ -383,12 +409,11 @@ label neko:
     mc shy "I’d be honored if you let me share it for you, if that’s true of course."
 
     $ collage_pieces_roof[1] = 1
-    $ collage[8] = 1
 
     neko threaten "{b}OF COURSE IT IS! THOSE ****S ARE FINALLY GONNA SEE HENTAI AS ART!{/b}"
-    neko submit "{b}Take good care of it or you’ll sucking burgers through a straw ‘til graduation.{/b}"
+    neko submit "{b}Take good care of it or you’ll be sucking burgers through a straw ‘til graduation.{/b}"
 
-    call devor(2)
+    jump rf
 
 label herra:
     scene bg roof
@@ -411,8 +436,69 @@ label herra:
     mc shy "Haha not really sure what you mean by that but can I have the picture?"
 
     $ collage_pieces_roof[2] = 1
-    $ collage[9] = 1
 
     herra submit "Sure, it might have a little spray paint on it though..."
 
-    call devor(2)
+    jump rf
+
+label second_part:
+    scene bg hallway
+    with fade
+
+    "hallway scene"
+
+label at_prom:
+    play music gay volume 0.5
+    $ time = 3                                        ### set variable time to 3
+    $ timer_jump = 'lovemenu_slow'                    ### set where you want to jump once the timer runs out
+       
+    scene bg prom 
+    with fade
+
+    "prom scene"
+
+label lovemenu:
+    show screen countdown
+
+    menu:
+        "Pico":
+            hide screen countdown
+            jump choose_pico
+
+        "Steve":
+            hide screen countdown
+            jump choose_steve
+
+label lovemenu_slow:
+    hide screen countdown
+    menu:
+        "Pico":
+            jump choose_pico
+
+        "Steve":
+            jump choose_steve
+
+        "Trash-can":
+            jump choose_trash
+
+label choose_steve:
+    show bg prom_collage_fixed
+    with fade
+    "Steve ending"
+    jump the_end
+
+label choose_pico:
+    show bg prom_collage_fixed
+    with fade
+    "Pico ending"
+    jump the_end
+
+label choose_trash:
+    show bg prom_collage_fixed
+    with fade
+    "Trash ending"
+    jump the_end
+
+label the_end:
+    "Fin."
+    return
