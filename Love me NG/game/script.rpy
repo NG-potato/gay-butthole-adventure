@@ -4,6 +4,11 @@ init python:
     def new_char(name, col, tag):
         return Character(_(name), color=col, image=tag, voice_tag=tag)
 
+transform flip:
+    xzoom -1.0
+
+transform unflip:
+    xzoom 1.0
 
 # this code decreases variable time by 0.01 until time hits 0, at which point, 
 # the game jumps to label timer_jump (timer_jump is another variable that will be defined later)
@@ -66,6 +71,7 @@ image bg prom_collage_fixed = im.Scale("images/bg promcollage.webp", 1280, 720)
 image bg classroom_fixed = im.Scale("images/bg classroom.webp", 1280, 720)
 image bg dev_fixed = im.Scale("images/bg testbg.webp", 1280, 720)
 
+image bg dream_classroom = Transform("bg classroom_fixed", matrixcolor=SaturationMatrix(0.0)*BrightnessMatrix(0.7))
 
 #Collage
 default collage_pieces_classroom = [0,0,0]
@@ -83,6 +89,9 @@ label devmenu:
 
     menu:
         "Where to first...\nPieces: [total]"
+
+        "Dream":
+            jump dream
 
         "Morning":
             jump morning
@@ -113,6 +122,11 @@ label devmenu:
 
         "The End" if all([1 if all(i) else 0 for i in total]):
             jump second_part
+
+label dream:
+    show bg dream_classroom
+    with fade
+    "dream"
 
 label morning:
     show bg bedroom
@@ -471,9 +485,27 @@ label surprise_meeting:
 
 label second_part:
     scene bg hallway
+    show mc neutral at left
+    show trash at right
     with fade
+    mc "Man, some of the places in this school are really poorly made"
 
-    "hallway scene"
+    trash "Yeah they must’ve spent most of their time setting up the gym"
+
+    "Collage get!"
+
+    trash "But that’s not important right now! Here, I’ve put it back together for you"
+    trash "Well, what are you standing around here for? Get in there!"
+
+    mc worried "But what do I say? What should I do?"
+
+    mc yiiking "Oh man I’m YIIKING OUT RIGHT NOW"
+
+    trash """
+    I think you just need to get out there and speak from the heart. 
+
+    When you stay true to yourself MC-kun it doesn’t matter who you talk to, they’ll understand.
+    """
 
 label at_prom:
     play music gay volume 0.5
@@ -481,9 +513,37 @@ label at_prom:
     $ timer_jump = 'lovemenu_slow'                    ### set where you want to jump once the timer runs out
        
     scene bg prom 
+    show mc nervous at center
     with fade
 
-    "prom scene"
+    mc "Ouch... What a bit-{w=1}{nw}"
+    show mc worried
+    show p placeholder at right
+    p "Are you alright MC-kun? We’ve been trying to reach you about your car’s extended warranty." with easeinright
+
+    show s placeholder at left
+    s "Shut up Pico, do you know how much that dates the game!?" with easeinleft
+    show mc:
+        flip
+    s "We’ve been trying to corner your tight ass all day."
+
+    mc "({i}Oh Crap{/i}) Hi Pico, Hi Steve"
+
+    s "You really went all out for this Promdancestravaganza™ huh."
+    
+    show mc:
+        unflip
+    p "Well now that you’re here we can finally get to our dance."
+    
+    show mc: 
+        flip
+    s "Hate to shatter your sad, naive delusions, but MC-kun is obviously here to ask yours truly."
+    
+    show mc:
+        unflip
+    p "In your dreams, why would they ever want to dance with a *cock joke* like you?"
+
+    mc "Um..."
 
 label lovemenu:
     show screen countdown
@@ -510,23 +570,105 @@ label lovemenu_slow:
             jump choose_trash
 
 label choose_steve:
-    scene bg prom_collage_fixed
-    with fade
     "Steve ending"
+
+    hide p placeholder
+    p "You'll regret this!" with dissolve
+
+    s "Oh.. This looks... Great.. Thanks"
+
+    show s placeholder at right
+    with easeinright
+
+    show mc happy at left
+    with easeinleft
+
+    mc "That's not all"
+
+    s placeholder "Is that... A pretty pink birthday cake with my face on it? You didn't do this because I referenced it at the beginning of the game.. Did you?"
+
+    mc bashful "No Steve, I did it because I care."
+
+    show s placeholder at center
+
+    s "Just kiss me you black and white son of a gun!"
+
     jump the_end
 
 label choose_pico:
-    scene bg prom_collage_fixed
-    with fade
     "Pico ending"
+
+    p "Don't do this... I have a dark secret"
+
+    show mc bashful at left
+    with easeinleft
+
+    mc "I know what you are..."
+
+    p placeholder "Then say it. Out loud."
+
+    mc nervous "..."
+
+    mc "... A character in a wildly popular rhythm game"
+
+    mc worried "But I love every part of you! From the edgy flash game you to the freaky on a friday night you! You make me feel warm inside"
+    show mc bashful at left
+
+    p placeholder "MC-kun...  Would you like me to make you feel warm on the outside?"
+
+    scene bg testbg
+    with fade
+
     jump the_end
 
 label choose_trash:
-    scene bg prom_collage_fixed
-    with fade
     "Trash ending"
+
+    "WHAT?!"
+
+    s placeholder "Who the fuck is Trash-Can?! I'm so confused..."
+
+    p placeholder "Forget this, you two deserve each-other, you ARE Trash!"
+
+    show steve placeholder at left
+    with easeoutright
+
+    show pico placeholder at right
+    with easeoutright
+
+    scene bg prom
+
+    show trash placeholder at center
+    with easeinright
+
+    t "Is.. Is that how you really feel MC-kun?"
+
+    scene bg prom
+
+    show trash placeholder at right
+
+    show mc bashful at left
+
+    mc "Yes, Trash-Can, you've always been there for me when I've needed help."
+
+    mc happy "You complete me!"
+
+    show trash placeholder at right
+
+    t "Oh MC-kun, Kiss me!"
+
+    scene bg testbg
+    with fade
+
     jump the_end
 
 label the_end:
-    "Fin."
+
+    scene bg prom_collage_fixed
+    with fade
+
+    $ ui.text("The End", size=40, xpos=400, ypos=340, color="#ffffff")
+
+    $renpy.pause(10)
+
     return
