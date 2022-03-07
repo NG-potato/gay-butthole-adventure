@@ -32,6 +32,8 @@ define mc = new_char("MC-kun", "#f22a19", "mc")
 define p = new_char("Pico", "#1957BB", "pico")
 #steve
 define s = new_char("Steve", "#1957BB", "steve")
+#pico & steve
+define ps = new_char("Pico & Steve", "#1957BB", "steve")
 #trash
 define t = new_char("Trash-can", "#1957BB", "t")
 
@@ -126,20 +128,141 @@ label devmenu:
 label dream:
     show bg dream_classroom
     with fade
-    "dream"
+    
+    show p placeholder at left with dissolve
+    p "I’ll make sure to tell you not to come to school tomorrow~"
+    
+    hide p placeholder with dissolve
+    
+    pause(0.5)
+    
+    show s placeholder at right
+    with dissolve
+    s "It’s not a pretty pink birthday cake with your face on it, but take this you scrumptious son of a bitch~"
+    
+    hide s placeholder
+    with dissolve
+    
+    pause(0.5)
+    
+    show p placeholder at left
+    with dissolve
+    
+    show s placeholder at right
+    with dissolve
+    
+    ps "Happy Valentines day!"
+    
+    scene black
+    #heres where it jumps to morning with the window smash
 
 label morning:
+    
+    scene black
+    with fade
+    
+    #insert window smash sound effect here
+    "*SMASH*" with vpunch
+
+    u "JESUS CHRIST WHAT THE HELL"
+    
+    fv "Wakey-wakey~"
+    
     show bg bedroom
     with fade
+    
+    #Incase we show the MC before the name input
+    #show mc worried at left
+    #with easeinleft
+    
+    u "What?"
+    
+    #Does trashcan have a portrait?
+    #show t nervous at right
+    #with easeinright
+    
+    fv "Don’t tell me you forgot! That Ligma must’ve really messed you up. It’s White Day!"
 
-    "morning scene"
-    jump devmenu
+    #shock sound effect
+    
+    #Incase we show the MC before the name input
+    #show mc nervous at left
+    u "WH-WHITE DAY!? That’s today?!"
+
+    fv "Of course it is, you f**king baka! Now c'mon! If you don’t get dressed now, we’re gonna be late for class!"
+
+    #-how should we insert this part from the script?-
+    "You rush to put on your clothes, and get a glance of yourself in the mirror. All you see is a blur."
+    
+    u "Aw crap, I nearly forgot to put on my contacts again. Now where could they be…"
+    
+    #Rummaging sound
+    
+    $ renpy.input("What is your name?", length=32)
+    
+    #Rummaging sound (again)
+    
+    show mc happy at left
+    with easeinleft
+    mc "There we go! I better get going..."
 
 label walking:
     show bg path_fixed
     with fade
 
-    "walking to school"
+    show t at right
+    with easeinright
+    t "Sooo… did you ask anyone to go to the White Day Promdancestravaganza™ yet?"
+    
+    show mc nervous at left
+    with easeinleft
+    mc "Aw nuts! I totally forgot…"
+    
+    t "Well, at least you have a gift to give, right?"
+    
+    show mc bashful at left
+    with dissolve
+    mc "..."
+    
+    t "Right?"
+    
+    mc "Uhhhhhhhhhh"
+    
+    t "So, you don’t have anything to give anyone."
+    
+    show mc worried at left
+    with dissolve
+    mc "Oh man! If Pico or Steve find out that I don’t have a gift, I’m ruined! You gotta help me Trash-can, you’re my only hope!"
+
+    t "Fine! If you can’t come up with something yourself, then I’m sure our classmates would be willing to help."
+
+    show mc bashful at left
+    with dissolve
+    mc "What do you mean?"
+    
+    t "Well, we’ve all been working on an end-of-year project. I’m sure that if you ask nicely, they’ll help you out."
+    
+    t "Here, you’ll need this. It’s a list of everyone working on the project." 
+    
+    #Script says that a video could go here, for now it's just a description box
+    "Trash-can hands you a crumpled up piece of paper, with a shittily scribbled list of people on it."
+    
+    show mc shy at left
+    with dissolve
+    mc "Wow... thanks Trash-can, I- I don’t know what to say..."
+    
+    t "You’ll just have to owe me hehe~"
+    t "*giggles*"
+    
+    #footsteps *2 sound, pause
+    
+    t "Ah, here we are, made it to school. Remember to meet me back here when you’re done so I can help you put the project together, ok?"
+
+    #Maybe show a "Where to first?" selection with the locations
+
+    scene black
+    with fade
+
     jump devmenu
 
 #Classroom encounters
@@ -273,7 +396,7 @@ label lib:
 label spook:
     scene bg library
     show mc neutral at left
-
+    with easeinleft
     show spook talking at right
     with easeinright
 
@@ -322,6 +445,7 @@ label louis:
 label cat:
     scene bg library
     show mc neutral at left
+    with easeinleft
 
     show cat talking at right
     with easeinright
@@ -344,7 +468,7 @@ label cat:
 label gloom:
     scene bg library
     show mc neutral at left
-
+    with easeinleft
     show gloom placeholder at right
     with easeinright
 
