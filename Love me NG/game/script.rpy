@@ -296,8 +296,9 @@ label spook:
 label louis:
     scene bg library
     show mc neutral at left
+    with easeinleft
 
-    show louis placeholder at right
+    show louis talking at right
     with easeinright
 
     louis "Oh hey man what’s up?"
@@ -314,7 +315,7 @@ label louis:
 
     $ collage_pieces_library[1] = 1
 
-    louis "Okay..."
+    louis submit "Okay..."
 
     jump lib
 
@@ -466,24 +467,114 @@ label herra:
     jump rf
 
 label surprise_meeting:
-    $ renpy.scene()
-    $ renpy.show(in_between_scene)
-    with fade
-
     $ finished_rooms = sum([1 if all(i) else 0 for i in total])
 
     if finished_rooms == 1:
-        "pico scene"
-    elif finished_rooms == 2:
-        "steve scene"
-    elif finished_rooms == 3:
-        "pico & steve scene"
+        $ renpy.scene()
+        $ renpy.show(in_between_scene)
+        with fade
+        show mc neutral at center
 
-    "end of surprise scene"
+        show p placeholder at center
+        with ease
+
+        show p placeholder at right
+        with easeinleft
+
+        show mc neutral at left
+        with easeinright
+
+        p "Oof, Watch where you’re... Oh MC-kun you’re back! I was worried you were gonna miss the Promdancestravaganza™"
+
+        mc "Oh, hi Pico.. I wouldn’t miss it for the world."
+
+        p "Funny running into you right now, I was just on my way to target practice. Care to join?"
+
+        mc "(If I don’t come up with something fast {i}I’ll{/i} be the target!) OH yeah would love to but I uhh"
+        mc "I gotta go to the optometrist for my teeth whitening appointment! I mean..."
+        mc "I left my oven outside! Or uhh what I was trying to say was..."
+        mc "Gotta take out the trash!"
+        hide mc
+        mc "WOAH would you look at the time gotta scoot see you later okay bye!" with easeoutleft
+
+        p ""
+        p "What?"
+
+    elif finished_rooms == 2:
+        $ renpy.scene()
+        $ renpy.show(in_between_scene)
+        with fade
+        show mc neutral at left
+        with easeinleft
+
+        mc "Oh shit I’m sorry"
+
+        show s placeholder at right
+        with easeinright
+
+        s "Sorry for what?"
+
+        mc "For bumping into you."
+
+        s "Oh you know you can bump into me any time. With your cock."
+
+        mc nervous "Oh, you mean like a rooster?"
+
+        s "Yeah, right, like a rooster."
+
+        mc shy "Heh, scared me there for a sec."
+
+        s "Yep..."
+
+        mc bashful "..."
+
+        mc "I should get going now."
+
+        s "Yyyeah. See you at the Promdancestravaganza™"
+
+    elif finished_rooms == 3:
+        $ renpy.scene()
+        $ renpy.show(in_between_scene)
+        show mc neutral at center
+        with fade
+
+        mc "My mc-senses are tingling..."
+
+        show p placeholder at right 
+        show s placeholder at left 
+        with vpunch
+
+        "MC-kun!"
+
+        hide mc neutral
+        mc "(Stupid, Insipid, Startled Sounds)" with easeoutright
+
+        p "What gives? Do you think he’s mad at us?"
+
+        s "I don’t think so… Wait, did you brush your teeth today?"
+
+        p "Yeah of course. You must have that nasty swamp-ass today."
+
+        s "Ugh, I know! It’s only natural in a sub-tropical climate like this. Anyway, I should probably change before the Promdancestravagnza™"
+
+        p "Ditto. I can feel it coming on too…"
 
     jump devmenu
 
 label second_part:
+    scene bg path_fixed
+    show t at right
+    with fade
+
+    t "Took you long enough MC-kun!"
+    t "It's almost time."
+
+    show mc shy at left
+    mc "Haha, yeah I'm pretty slow sometimes" with easeinleft
+
+    t "You’ve got that right, now hand over the pieces."
+    t "I’ll put it together while you go get ready and we’ll meet back at the hallway outside of the gym."
+
     scene bg hallway
     show mc neutral at left
     show t at right
@@ -499,7 +590,7 @@ label second_part:
     t "Well, what are you standing around here for? Get in there!"
 
     mc worried "But what do I say? What should I do?"
-    mc @ yiiking "Oh man I’m YIIKING OUT RIGHT NOW"
+    mc yiiking "Oh man I’m YIIKING OUT RIGHT NOW"
 
     t "I think you just need to get out there and speak from the heart."
     t "When you stay true to yourself MC-kun it doesn’t matter who you talk to, they’ll understand."
@@ -525,9 +616,9 @@ label at_prom:
     p "Are you alright MC-kun? We’ve been trying to reach you about your car’s extended warranty." with easeinright
 
     show s placeholder at left
-    s "Shut up Pico, do you know how much that dates the game!?" with easeinleft
     show mc:
         flip
+    s "Shut up Pico, do you know how much that dates the game!?" with easeinleft
     s "We’ve been trying to corner your tight ass all day."
 
     mc "({i}Oh Crap{/i}) Hi Pico, Hi Steve"
@@ -627,41 +718,28 @@ label choose_pico:
 label choose_trash:
     "Trash ending"
 
-    "WHAT?!"
+    "WHAT?!" with vpunch
 
     s placeholder "Who the fuck is Trash-Can?! I'm so confused..."
 
     p placeholder "Forget this, you two deserve each-other, you ARE Trash!"
 
-    show steve placeholder at left
-    with easeoutright
+    hide s placeholder
+    hide p placeholder
+    with dissolve
 
-    show pico placeholder at right
-    with easeoutright
+    show mc neutral at left
+    with ease
 
-    scene bg prom
-
-    show trash placeholder at center
+    show t at right
     with easeinright
-
     t "Is.. Is that how you really feel MC-kun?"
-
-    scene bg prom
-
-    show trash placeholder at right
-
-    show mc bashful at left
 
     mc "Yes, Trash-Can, you've always been there for me when I've needed help."
 
     mc happy "You complete me!"
 
-    show trash placeholder at right
-
     t "Oh MC-kun, Kiss me!"
-
-    scene bg testbg
-    with fade
 
     jump the_end
 
