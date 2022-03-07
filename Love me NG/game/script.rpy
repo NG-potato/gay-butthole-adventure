@@ -24,7 +24,7 @@ define in_between_scene = ""
 #???
 define u = new_char("???", "#f22a19", "mc")
 #familiar voice
-define fv = new_char("A Familiar Voice", "#1957BB", "trash")
+define fv = new_char("A Familiar Voice", "#1957BB", "t")
 
 #mc
 define mc = new_char("MC-kun", "#f22a19", "mc")
@@ -33,7 +33,7 @@ define p = new_char("Pico", "#1957BB", "pico")
 #steve
 define s = new_char("Steve", "#1957BB", "steve")
 #trash
-define t = new_char("Trash-can", "#1957BB", "trash")
+define t = new_char("Trash-can", "#1957BB", "t")
 
 #Classroom
 #mj
@@ -486,26 +486,29 @@ label surprise_meeting:
 label second_part:
     scene bg hallway
     show mc neutral at left
-    show trash at right
+    show t at right
     with fade
     mc "Man, some of the places in this school are really poorly made"
 
-    trash "Yeah they must’ve spent most of their time setting up the gym"
+    t "Yeah they must’ve spent most of their time setting up the gym"
+
+    t "But that’s not important right now! Here, I’ve put it back together for you"
 
     "Collage get!"
 
-    trash "But that’s not important right now! Here, I’ve put it back together for you"
-    trash "Well, what are you standing around here for? Get in there!"
+    t "Well, what are you standing around here for? Get in there!"
 
     mc worried "But what do I say? What should I do?"
+    mc @ yiiking "Oh man I’m YIIKING OUT RIGHT NOW"
 
-    mc yiiking "Oh man I’m YIIKING OUT RIGHT NOW"
+    t "I think you just need to get out there and speak from the heart."
+    t "When you stay true to yourself MC-kun it doesn’t matter who you talk to, they’ll understand."
 
-    trash """
-    I think you just need to get out there and speak from the heart. 
+    mc shy "You really mean that?"
 
-    When you stay true to yourself MC-kun it doesn’t matter who you talk to, they’ll understand.
-    """
+    t "I mean kinda I guess. Now get that dick!"
+
+    mc neutral "What?"
 
 label at_prom:
     play music gay volume 0.5
