@@ -39,7 +39,7 @@ define t = new_char("Trash-can", "#1957BB", "t")
 
 #Classroom
 #mj
-define mj = new_char("MJ", "#eef3ff", "mj")
+define mj = new_char("MJ", "#2a108a", "mj")
 #slimy
 define slimy = new_char("Slimy", "#1957BB", "slimy")
 #bbi
@@ -69,7 +69,6 @@ define audio.gay = "music/I'm gay btw not sure if that matters.mp3"
 
 #BG scaling fixes
 image bg prom_collage_fixed = im.Scale("images/bg promcollage.webp", 1280, 720)
-image bg dev_fixed = im.Scale("images/bg testbg.webp", 1280, 720)
 
 image bg dream_classroom = Transform("bg classroom", matrixcolor=SaturationMatrix(0.0)*BrightnessMatrix(0.7))
 
@@ -93,14 +92,15 @@ screen map:
 
 #this is mainly used to play music and stuff at the beginning
 label start:
-    play music bgm1 volume 0.05
+    play music bgm1
+    jump dream
 
 label devmenu:
-    scene bg testbg
+    scene bg path
     with fade
 
     menu:
-        "Where to first...\nPieces: [total]"
+        "Pieces: [total]"
 
         "Dream":
             jump dream
@@ -190,30 +190,20 @@ label morning:
     show bg bedroom
     with fade
     
-    #Incase we show the MC before the name input
-    #show mc worried at left
-    #with easeinleft
-    
     u "What?"
-    
-    #Does trashcan have a portrait?
-    #show t nervous at right
-    #with easeinright
     
     fv "Don’t tell me you forgot! That Ligma must’ve really messed you up. It’s White Day!"
 
     #shock sound effect
     
-    #Incase we show the MC before the name input
-    #show mc nervous at left
     u "WH-WHITE DAY!? That’s today?!"
 
     fv "Of course it is, you f**king baka! Now c'mon! If you don’t get dressed now, we’re gonna be late for class!"
 
-    #-how should we insert this part from the script?-
+    #clothing sounds
     "You rush to put on your clothes, and get a glance of yourself in the mirror. All you see is a blur."
     
-    u "Aw crap, I nearly forgot to put on my contacts again. Now where could they be…"
+    u "Aw crap, I nearly forgot to put on my contacts again. Now where could they be..."
     
     #Rummaging sound
     
@@ -221,44 +211,37 @@ label morning:
     
     #Rummaging sound (again)
     
-    show mc happy at left
-    with easeinleft
-    mc "There we go! I better get going..."
+    show mc neutral at left
+    mc "There we go! Better get going and meet up with her outside..." with easeinleft
 
 label walking:
-    show bg path
+    scene bg path
     with fade
 
     show t talking at right
     with easeinright
-    t "Sooo… did you ask anyone to go to the White Day Promdancestravaganza™ yet?"
+    t "Sooo... did you ask anyone to go to the White Day Promdancestravaganza(tm) yet?"
     
     show mc nervous at left
-    with easeinleft
-    mc "Aw nuts! I totally forgot…"
+    mc "Aw nuts! I totally forgot..." with easeinleft
     
     t "Well, at least you have a gift to give, right?"
     
-    show mc bashful at left
-    mc "..." with dissolve
+    mc bashful "..." 
     
     t "Right?"
     
     mc "Uhhhhhhhhhh"
     
-    t angry "So, you don’t have anything to give anyone." with dissolve
-    
-    show mc worried at left
-    with dissolve
-    mc "Oh man! If Pico or Steve find out that I don’t have a gift, I’m ruined! You gotta help me Trash-can, you’re my only hope!"
+    t angry "So, you don’t have anything to give anyone."
+
+    mc worried "Oh man! If Pico or Steve find out that I don’t have a gift, I’m ruined! You gotta help me Trash-can, you’re my only hope!"
 
     t "Fine! If you can’t come up with something yourself, then I’m sure our classmates would be willing to help."
 
-    show mc bashful at left
-    with dissolve
-    mc "What do you mean?"
+    mc bashful "What do you mean?"
     
-    t talking "Well, we’ve all been working on an end-of-year project. I’m sure that if you ask nicely, they’ll help you out." with dissolve
+    t talking "Well, we’ve all been working on an end-of-year project. I’m sure that if you ask nicely, they’ll help you out." 
     
     t "Here, you’ll need this. It’s a list of everyone working on the project." 
     
@@ -266,7 +249,6 @@ label walking:
     "Trash-can hands you a crumpled up piece of paper, with a shittily scribbled list of people on it."
     
     show mc shy at left
-    with dissolve
     mc "Wow... thanks Trash-can, I- I don’t know what to say..."
     
     t "You’ll just have to owe me hehe~"
@@ -283,7 +265,7 @@ label walking:
     scene black
     with fade
 
-    jump devmenu
+    jump school_map
 
 #Classroom encounters
 label cla:
@@ -295,20 +277,16 @@ label cla:
     with fade
 
     menu:
-        "Ah, the good old classroom. An absolute must-have in any school-themed visual novel."
-        "Anyways...\nPieces: [collage_pieces_classroom]"
+        "Ahhh, the good old classroom. An absolute must-have in any school-themed visual novel."
 
-        "MJ":
+        "MJ" if not collage_pieces_classroom[0]:
             jump mj
 
-        "Slimy":
+        "Slimy" if not collage_pieces_classroom[1]:
             jump slimy
 
-        "BBi":
+        "BBi" if not collage_pieces_classroom[2]:
             jump bbi
-
-        "Back":
-            jump devmenu
 
 label mj:
     scene bg classroom
@@ -321,7 +299,7 @@ label mj:
     show mc nervous at left
     with easeinleft
 
-    mc "Erm… hi."
+    mc "Erm... hi."
     mc "Well you know White Day is today right? I don’t have any gift prepared yet."
     mc happy "But I heard that you were part of the school project! Could I have your piece?"
 
@@ -333,7 +311,7 @@ label mj:
 
     $ collage_pieces_classroom[0] = 1
 
-    mc happy "Oh wow! Now I can finally **** **** in my **** with some **** all over ******************! Thank you Michael Jackson!"
+    mc happy "Oh wow! Now I can finally get to the good ****! Thank you Michael Jackson!"
 
     mj point "live 2 love brother"
 
@@ -373,11 +351,11 @@ label bbi:
 
     bbi "what the hell MC bro that was my NASA nap whats your deal ??"
 
-    mc bashful "Well I heard you took part in the collaboration project."
+    mc bashful "Well I heard you took part in the collab."
 
     bbi talking "eeh i think so, yea, so what ???"
 
-    mc shy "I just REALLY need it now for an emergency present for White Day, can you please let me have it?"
+    mc worried "I just REALLY need it now for an emergency present for White Day, can you please let me have it?"
 
     $ collage_pieces_classroom[2] = 1
 
@@ -395,34 +373,29 @@ label lib:
     scene bg library
     with fade
     menu:
-        "I sure wish I could read."
-        "Anyways...\nPieces: [collage_pieces_library]"
-
-        "Spook":
+        "I sure wish I could read..."
+        "Spook" if not collage_pieces_library[0]:
             jump spook
 
-        "Louis":
+        "Louis" if not collage_pieces_library[1]:
             jump louis
 
-        "Cat":
+        "Cat" if not collage_pieces_library[2]:
             jump cat
 
-        "Gloom":
+        "Gloom" if not collage_pieces_library[3]:
             jump gloom
-
-        "Back":
-            jump devmenu
 
 label spook:
     scene bg library
-    show mc neutral at left
-    with easeinleft
     show spook talking at right
     with easeinright
 
     spook "Hey, MC-kun! I haven’t seen you in almost a month. You had me worried sick!"
 
-    mc bashful "I feel way better but.. I have no gift for white day..."
+    show mc happy at left
+    mc "I feel way better but.." 
+    mc bashful "I have no gift for white day..." with easeinleft
 
     spook talking alt "That’s terrible! Is there anything I can do?"
 
@@ -438,15 +411,14 @@ label spook:
 
 label louis:
     scene bg library
-    show mc neutral at left
-    with easeinleft
 
     show louis talking at right
     with easeinright
 
     louis "Oh hey man what’s up?"
 
-    mc "Give it to me. That thing. Your art piece"
+    show mc neutral at left
+    mc "Hand it over. That thing. Your art piece." with easeinleft
 
     louis "My project entry? But I’ve been working on this all month!"
 
@@ -464,8 +436,6 @@ label louis:
 
 label cat:
     scene bg library
-    show mc neutral at left
-    with easeinleft
 
     show cat submit at right
     with easeinright
@@ -474,7 +444,8 @@ label cat:
 
     cat @ submitalt "Sup MC-kun, here’s the project piece."
 
-    mc worried "Wait, what? I didn’t even ask you for it yet."
+    show mc nervous at left
+    mc "Wait, what? I didn’t even ask you for it yet." with easeinleft
 
     cat talkingalt "You ran through the hall screaming \"Oh god I need a White Day present\" several times before walking up to me."
     cat talking "Wasn’t exactly subtle."
@@ -487,22 +458,25 @@ label cat:
 
 label gloom:
     scene bg library
-    show mc neutral at left
-    with easeinleft
-    show gloom placeholder at right
+    show gloom talking at right
     with easeinright
 
+    gloom "Hey MC-kun! What’s up?"
+
+    show mc happy at left
+    mc "Trash-can told me that you worked on the big project, is it okay if I use it?" with easeinleft
+
+    gloom talkingalt "Sure thing, I’ve been waiting to show this off for ages!"
+    gloom "Sorry if it’s a little sticky, mini gloom here has a drooling problem"
     $ collage_pieces_library[3] = 1
 
-    gloom "Nothing written yet."
+    mc "Thanks!"
 
-    mc happy "Shame. Nice style though, you do something with your hair?"
+    mc shy "By the way did you do something with your hair?"
 
-    gloom "Yeah I've decided to pivot to trad."
+    gloom talking "Been trying out a more traditional approach, how’s it look?"
 
-    mc "Nice, nice. Okay thanks for the piece Gloom!"
-
-    gloom "No worries, have a good one."
+    mc happy "Looks good, see you at the dance!"
 
     jump lib
 
@@ -516,20 +490,16 @@ label rf:
     with fade
 
     menu:
-        "The delinquents should be hanging out up here, as usual. I hope they won't be any trouble."
-        "Anyways...\nPieces: [collage_pieces_roof]"
+        "The delinquents should be hanging out up here, as usual. I hope they won't be any trouble..."
 
-        "Moxxy":
+        "Moxxy" if not collage_pieces_roof[0]:
             jump moxxy
 
-        "Neko":
+        "Neko" if not collage_pieces_roof[1]:
             jump neko
 
-        "Herra":
+        "Herra" if not collage_pieces_roof[2]:
             jump herra
-
-        "Back":
-            jump devmenu
 
 label moxxy:
     scene bg roof
@@ -545,14 +515,14 @@ label moxxy:
     moxxy talkingalt "Next time you're gonna sneak up on me don't do it when I'm eating, it's a real choking hazard you know."
     moxxy talking "So what's up?"
 
-    mc happy "Can I have your piece of the big project? Without it I’ll never find true love!"
+    mc worried "Can I have your piece of the big project? Without it I’ll never find true love!"
 
     $ collage_pieces_roof[0] = 1
 
     moxxy talkingalt "Well if it helps you find true love at that lousy dance tonight then sure."
     moxxy submit "If it doesn't... at least you'll have a cool doodle from your friend Mox right?"
 
-    mc "Thanks, you're the best!"
+    mc happy "Thanks, you're the best!"
 
     jump rf
 
@@ -569,15 +539,15 @@ label neko:
 
     mc "I have a small favour to ask, you’re working on the big project right?"
 
-    neko happy "{b}Yeah, what of it? Come to see my masterpiece?{/b}" with dissolve
+    neko happy "{b}Yeah, what of it? Come to see my masterpiece?{/b}" 
 
-    mc bashful "Y-yeah, totally, totally… I’ve heard rumors from the other third years that it’s the strongest piece of art in the region." with dissolve
-    mc shy "I’d be honored if you let me share it for you, if that’s true of course." with dissolve
+    mc bashful "Y-yeah, totally, totally... I’ve heard rumors from the other third years that it’s the strongest piece of art in the region."
+    mc shy "I’d be honored if you let me share it for you, if that’s true of course."
 
     $ collage_pieces_roof[1] = 1
 
-    neko threaten "{b}OF COURSE IT IS! THOSE ****S ARE FINALLY GONNA SEE HENTAI AS ART!{/b}" with dissolve
-    neko submit "{b}Take good care of it or you’ll be sucking burgers through a straw ‘til graduation.{/b}" with dissolve
+    neko threaten "{b}OF COURSE IT IS! THOSE ****S ARE FINALLY GONNA SEE HENTAI AS ART!{/b}"
+    neko submit "{b}Take good care of it or you’ll be sucking burgers through a straw ‘til graduation.{/b}"
 
     jump rf
 
@@ -590,18 +560,18 @@ label herra:
     show mc happy at left
     with easeinleft
 
-    herra talking "Oh it’s just you MC-kun. What are you doing up here?" with dissolve
+    herra talking "Oh it’s just you MC-kun. What are you doing up here?"
 
     mc "Well Steve and Pico got me these imported chocolates for Valentines Day!" 
-    mc worried "I know you were part of the big art project, can I preeeeetty please have your piece? It’s for love..." with dissolve
+    mc worried "I know you were part of the big art project, can I preeeeetty please have your piece? It’s for love..."
 
-    herra confused "Imported... Those sound like the chocolates I got Pico for Valentines Day." with dissolve
+    herra confused "Imported... Those sound like the chocolates I got Pico for Valentines Day." 
 
-    mc shy "Haha not really sure what you mean by that but can I have the picture?" with dissolve
+    mc shy "Haha not really sure what you mean by that but can I have the picture?"
 
     $ collage_pieces_roof[2] = 1
 
-    herra submit "Sure, it might have a little spray paint on it though..." with dissolve
+    herra submit "Sure, it might have a little spray paint on it though..."
 
     jump rf
 
@@ -610,24 +580,25 @@ label surprise_meeting:
 
     if finished_rooms == 1:
         scene black
-        "You suddenly find yourself running into someone"
+        "You suddenly find yourself running into someone." with hpunch
         #sfx, oof!
         $ renpy.scene()
         $ renpy.show(in_between_scene)
-        with fade
 
-        show mc neutral at left
+        show mc nervous at left
         show p placeholder at right
-        p "Oof, Watch where you’re... Oh MC-kun you’re back! I was worried you were gonna miss the Promdancestravaganza™" with vpunch
+        p "Oof, Watch where you’re..."
+        p "Oh MC-kun you’re back! I was worried you were gonna miss the Promdancestravaganza(tm)"
 
-        mc "Oh, hi Pico.. I wouldn’t miss it for the world."
+        mc shy "Oh, hi Pico.. I wouldn’t miss it for the world."
 
         p "Funny running into you right now, I was just on my way to target practice. Care to join?"
 
-        mc "(If I don’t come up with something fast {i}I’ll{/i} be the target!) OH yeah would love to but I uhh"
-        mc "I gotta go to the optometrist for my teeth whitening appointment! I mean..."
-        mc "I left my oven outside! Or uhh what I was trying to say was..."
-        mc "Gotta take out the trash!"
+        mc "{i}If I don’t come up with something fast I’ll be the target!{/i}"
+        mc worried "OH yeah would love to but I uhh"
+        mc "I gotta go to the optometrist for my teeth whitening appointment! I mean..." with hpunch 
+        mc "I left my oven outside! Or uhh what I was trying to say was..." with hpunch
+        mc nervous "Gotta take out the trash!" with vpunch
         hide mc
         mc "WOAH would you look at the time gotta scoot see you later okay bye!" with easeoutleft
 
@@ -636,12 +607,12 @@ label surprise_meeting:
 
     elif finished_rooms == 2:
         scene black
-        "You suddenly find yourself running into someone else"
+        "You suddenly find yourself running into someone. Again." with hpunch
         #sfx, oof!
         $ renpy.scene()
         $ renpy.show(in_between_scene)
         with fade
-        show mc neutral at left
+        show mc worried at left
         with easeinleft
 
         mc "Oh shit I’m sorry"
@@ -651,7 +622,7 @@ label surprise_meeting:
 
         s "Sorry for what?"
 
-        mc "For bumping into you."
+        mc neutral "For bumping into you."
 
         s "Oh you know you can bump into me any time. With your cock."
 
@@ -667,36 +638,39 @@ label surprise_meeting:
 
         mc "I should get going now."
 
-        s "Yyyeah. See you at the Promdancestravaganza™"
+        s "Yyyeah. See you at the Promdancestravaganza(tm)"
 
     elif finished_rooms == 3:
         $ renpy.scene()
         $ renpy.show(in_between_scene)
-        show mc neutral at center
+
+        show mc worried at center
         with ease
 
-        mc "My mc-senses are tingling..."
+        mc worried "My mc-senses are tingling..."
 
         show p placeholder at right 
         show s placeholder at left 
         with vpunch
 
-        "MC-kun!"
+        ps "MC-kun!"
 
-        hide mc neutral
+        hide mc worried
         mc "(Stupid, Insipid, Startled Sounds)" with easeoutright
 
         p "What gives? Do you think he’s mad at us?"
 
-        s "I don’t think so… Wait, did you brush your teeth today?"
+        s "I don’t think so... Wait, did you brush your teeth today?"
 
         p "Yeah of course. You must have that nasty swamp-ass today."
 
-        s "Ugh, I know! It’s only natural in a sub-tropical climate like this. Anyway, I should probably change before the Promdancestravagnza™"
+        s "Ugh, I know! It’s only natural in a sub-tropical climate like this. Anyway, I should probably change before the Promdancestravagnza(tm)"
 
-        p "Ditto. I can feel it coming on too…"
+        p "Ditto. I can feel it coming on too..."
 
-    jump devmenu
+        jump second_part
+
+    jump school_map
 
 label second_part:
     scene bg entrance
@@ -707,40 +681,44 @@ label second_part:
     t @ threaten "It's almost time."
 
     show mc shy at left
-    mc "Haha, yeah I'm pretty slow sometimes" with easeinleft
+    mc "Haha, yeah I'm pretty slow sometimes." with easeinleft
 
     t "You’ve got that right, now hand over the pieces."
     t "I’ll put it together while you go get ready and we’ll meet back at the hallway outside of the gym."
     #sfx unzip, clothes ruffle, pissing
 
     scene bg hallway
-    show mc neutral at left
+    show mc happy at left
     show t talking at right
     with fade
     mc "Man, some of the places in this school are really poorly made"
 
     t "Yeah they must’ve spent most of their time setting up the gym"
 
-    t angry "But that’s not important right now! Here, I’ve put it back together for you" with dissolve
+    t angry "But that’s not important right now! Here, I’ve put it back together for you"
 
+    #triumph sfx!
     "Collage get!"
 
-    t talking "Well, what are you standing around here for? Get in there!" with dissolve
+    t talking "Well, what are you standing around here for? Get in there!"
 
-    mc worried "But what do I say? What should I do?" with dissolve
-    mc yiiking "Oh man I’m YIIKING OUT RIGHT NOW" with dissolve
+    mc worried "But what do I say? What should I do?"
+    mc @ yiiking "Oh man I’m YIIKING OUT RIGHT NOW"
 
-    t unu "I think you just need to get out there and speak from the heart." with dissolve
+    t unu "I think you just need to get out there and speak from the heart."
     t "When you stay true to yourself MC-kun it doesn’t matter who you talk to, they’ll understand."
 
-    mc shy "You really mean that?" with dissolve
+    mc shy "You really mean that?"
 
     t talking "I mean kinda I guess."
     t "Now get that dick!" with vpunch
 
-    mc neutral "What?"
+    mc nervous "What?"
+
+    #scene cut to black, sfx scene of tumbling, skidding, doors swinging open, the works
 
 label at_prom:
+
     play music gay volume 0.5
     $ time = 3                                        ### set variable time to 3
     $ timer_jump = 'lovemenu_slow'                    ### set where you want to jump once the timer runs out
@@ -749,7 +727,7 @@ label at_prom:
     show mc nervous at center
     with fade
 
-    mc "Ouch... What a bit-{w=1}{nw}"
+    mc "Man, I hate it when that happens..."
     show mc worried
     show p placeholder at right
     p "Are you alright MC-kun? We’ve been trying to reach you about your car’s extended warranty." with easeinright
@@ -760,9 +738,10 @@ label at_prom:
     s "Shut up Pico, do you know how much that dates the game!?" with easeinleft
     s "We’ve been trying to corner your tight ass all day."
 
-    mc "({i}Oh Crap{/i}) Hi Pico, Hi Steve"
+    mc "{i}Oh Crap{/i}"
+    mc "Hi Pico, Hi Steve"
 
-    s "You really went all out for this Promdancestravaganza™ huh."
+    s "You really went all out for this Promdancestravaganza(tm) huh."
     
     show mc:
         unflip
@@ -803,7 +782,6 @@ label lovemenu_slow:
             jump choose_trash
 
 label choose_steve:
-    "Steve ending"
 
     hide p placeholder
     p "You'll regret this!" with dissolve
@@ -813,30 +791,29 @@ label choose_steve:
     show s placeholder at right
     with easeinright
 
-    show mc happy at left
-    with easeinleft
+    show mc worried at left
+    with ease
 
-    mc "That's not all"
+    mc shy "I kinda figured you'd say that, so I also did this."
 
     s placeholder "Is that... A pretty pink birthday cake with my face on it? You didn't do this because I referenced it at the beginning of the game.. Did you?"
 
     mc bashful "No Steve, I did it because I care."
 
     show s placeholder at center
+    with ease
 
     s "Just kiss me you black and white son of a gun!"
 
     jump the_end
 
 label choose_pico:
-    "Pico ending"
+    hide s placeholder with dissolve
 
     p "Don't do this... I have a dark secret"
 
     show mc bashful at left
-    with easeinleft
-
-    mc "I know what you are..."
+    mc "I know what you are..." with ease
 
     p placeholder "Then say it. Out loud."
 
@@ -849,14 +826,9 @@ label choose_pico:
 
     p placeholder "MC-kun...  Would you like me to make you feel warm on the outside?"
 
-    scene bg testbg
-    with fade
-
     jump the_end
 
 label choose_trash:
-    "Trash ending"
-
     "WHAT?!" with vpunch
 
     s placeholder "Who the fuck is Trash-Can?! I'm so confused..."
@@ -867,10 +839,10 @@ label choose_trash:
     hide p placeholder
     with dissolve
 
-    show mc neutral at left
+    show mc worried at left
     with ease
 
-    show t at right
+    show t unu at right
     with easeinright
     t "Is.. Is that how you really feel MC-kun?"
 
@@ -878,7 +850,7 @@ label choose_trash:
 
     mc happy "You complete me!"
 
-    t "Oh MC-kun, Kiss me!"
+    t talking "Oh MC-kun, Kiss me!"
 
     jump the_end
 
