@@ -18,12 +18,12 @@ define config.name = _("Love me NG")
 ## Determines if the title given above is shown on the main menu screen. Set
 ## this to False to hide the title.
 
-define gui.show_name = True
+define gui.show_name = False
 
 
 ## The version of the game.
 
-define config.version = "2.1"
+define config.version = "3"
 
 
 ## Text that is placed on the game's about screen. Place the text between the

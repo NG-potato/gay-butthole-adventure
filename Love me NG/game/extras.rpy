@@ -1,0 +1,151 @@
+
+## End Credits Scroll ############################################################
+## ATL for scrolling screen object. In this case, credits roll.
+## Speed is the time for object to move up from initial ypos to finish ypos.
+
+## Code Source: https://lemmasoft.renai.us/forums/viewtopic.php?t=42667
+
+transform credits_scroll(speed):
+    ypos 1000
+    linear speed ypos -1000
+    ## Adjust these numbers to be the height of your end credits. Both numbers
+    ## should be the same.
+
+## Credits screen.
+
+screen credits():
+
+    ## Ensure that the game_menu screens don't appear and interrupt the credits.
+    key "K_ESCAPE" action NullAction()
+    key "K_MENU" action NullAction()
+    key "mouseup_3" action NullAction()
+
+    style_prefix "credits"
+
+    ## If a player has seen the end credits before, this button appears.
+    if persistent.credits_seen:
+
+        textbutton _("Skip End Credits") action Jump("skip_credits") xalign 1.0 yalign 1.0
+
+    timer 30.0 action Return()
+    ## Adjust this number to control when the Credits screen is hidden and the game
+    ## returns to its normal flow.
+    ## Ideally, there is some wait time after the the credits reaches the end.
+
+    frame at credits_scroll(30.0):
+        ## Adjust this number to control the speed at which the credits scroll.
+        background None
+        xalign 0.5
+
+        vbox:
+            text "Producer" size 40
+            null height 20
+            text "Manlypotato" size 25
+
+            null height 100
+            
+            text "Art" size 40
+            null height 20
+
+            text "test" size 25
+
+            null height 20
+
+            text "test - test" size 25
+
+            null height 100
+
+            text "Soundtrack" size 40
+            null height 20 
+
+            text "test" size 25
+
+            null height 100
+
+            # text "GUI Template" size 100
+            text "Programming" size 40
+            null height 20
+
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "test" size 25
+
+                text "tatata" size 25
+
+            null height 20
+
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "minute" size 25
+
+                text "npckc" size 25
+
+            null height 100
+
+            text "Special Thanks" size 40
+            null height 20 
+
+            text "You!" size 25
+
+style credits_hbox:
+    spacing 40
+    ysize 30
+
+style credits_label_text:
+    xalign 0.5
+    size 200
+    text_align 0.5
+
+style credits_text:
+    xalign 0.5
+    size 80
+    justify True
+    text_align 0.5
+    color "#ffffff"
+
+style backercredits_text:
+    xalign 0.5
+    size 50
+    justify True
+    text_align 0.5
+    color "#ffffff"
+
+
+## Results Screen ############################################################
+## A screen that displays how much of the game the player has seen.
+
+## Code Source: https://lemmasoft.renai.us/forums/viewtopic.php?t=39859
+## Official Documentation of function: https://www.renpy.org/doc/html/other.html#renpy.count_dialogue_blocks
+
+# This creates a percentage based on how much of the game the player has seen. 
+init python:
+
+    numblocks = renpy.count_dialogue_blocks()
+
+    def percent():
+
+        global readtotal
+        readtotal = renpy.count_seen_dialogue_blocks()* 100 / numblocks
+        persistent.readtotal = readtotal
+        ## This is displayed in our Achievements screen.
+
+default readtotal = 0
+
+screen results():
+    
+    zorder 200
+
+    vbox:
+        xalign .5
+        yalign 0.025
+        spacing 45
+
+        text "Script Seen: [readtotal]%" color "#fff"
+
+    textbutton _("Main Menu") action Jump("return_to_sender") xalign 1.0 yalign 1.0
