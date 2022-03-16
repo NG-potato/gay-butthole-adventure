@@ -6,8 +6,8 @@
 ## Code Source: https://lemmasoft.renai.us/forums/viewtopic.php?t=42667
 
 transform credits_scroll(speed):
-    ypos 1000
-    linear speed ypos -1000
+    ypos 2000
+    linear speed ypos -1800
     ## Adjust these numbers to be the height of your end credits. Both numbers
     ## should be the same.
 
@@ -27,54 +27,73 @@ screen credits():
 
         textbutton _("Skip End Credits") action Jump("skip_credits") xalign 1.0 yalign 1.0
 
-    timer 30.0 action Return()
+    timer 43.0 action Return()
     ## Adjust this number to control when the Credits screen is hidden and the game
     ## returns to its normal flow.
     ## Ideally, there is some wait time after the the credits reaches the end.
 
-    frame at credits_scroll(30.0):
+    frame at credits_scroll(45.0):
         ## Adjust this number to control the speed at which the credits scroll.
         background None
         xalign 0.5
 
         vbox:
+            null height -1000
             text "Producer" size 40
             null height 20
-            text "Manlypotato" size 25
-
-            null height 100
-            
-            text "Art" size 40
-            null height 20
-
-            text "test" size 25
-
-            null height 20
-
-            text "test - test" size 25
+            text "ManlyPotato" size 25
 
             null height 100
 
-            text "Soundtrack" size 40
+            text "Music" size 40
             null height 20 
 
-            text "test" size 25
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "CommanderJersey" size 25
+
+                text "Main theme" size 25
+
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "ManlyPotato" size 25
+
+                text "Ending theme" size 25
 
             null height 100
 
-            # text "GUI Template" size 100
+            text "Writing" size 40
+            null height 20
+            text "ManlyPotato" size 25
+            null height 20
+            text "LilSpook" size 25
+            null height 20
+            text "VoicesByCorey" size 25
+            null height 20
+            text "mettoretto" size 25
+            null height 20
+            text "Nek0ai" size 25
+
+            null height 100
+
             text "Programming" size 40
             null height 20
 
-            hbox:
+            text "ManlyPotato" size 25
+            null height 20 
+            text "CommanderJersey" size 25
+            null height 20
+            text "Tekkyon" size 25
 
-                xalign 0.5
-                spacing 100
+            null height 100
 
-                text "test" size 25
-
-                text "tatata" size 25
-
+            text "Voice Acting" size 40
             null height 20
 
             hbox:
@@ -82,10 +101,88 @@ screen credits():
                 xalign 0.5
                 spacing 100
 
-                text "minute" size 25
+                text "ManlyPotato" size 25
 
-                text "npckc" size 25
+                text "MC-kun" size 25
 
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "BigDongByCorey " size 25
+
+                text "Steve, Pico, Slimy" size 25
+
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "LilSpook" size 25
+
+                text "Trash-can, Neko, Spook" size 25
+
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "ChromaCee" size 25
+
+                text "Herra, Gloom" size 25
+
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "FineCurry" size 25
+
+                text "Louis" size 25
+
+            hbox:
+
+                xalign 0.5
+                spacing 100
+
+                text "MayaLaCookie" size 25
+
+                text "Moxxie" size 25
+
+            null height 100
+            
+            text "Art & Characters" size 40
+            null height 20
+
+            text "An Original Joke - Cat" size 25
+            null height 20
+
+            text "Bbii - Bbi" size 25
+            null height 20
+
+            text "ChromaCee - Herra" size 25
+            null height 20
+
+            text "GloomGorl - Gloom" size 25
+            null height 20
+
+            text "FineCurry - Louis" size 25
+            null height 20
+
+            text "LilSpook - Spook" size 25
+            null height 20
+
+            text "MayaLaCookie - Moxxy" size 25
+            null height 20
+
+            text "mettoretto - MJ" size 25
+            null height 20
+
+            text "Nek0ai - Neko" size 25
+            null height 20
+
+            text "Slimygoo - Slimy" size 25
             null height 100
 
             text "Special Thanks" size 40

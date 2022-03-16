@@ -23,13 +23,14 @@ define gui.show_name = False
 
 ## The version of the game.
 
-define config.version = "3"
+define config.version = "4"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
+    Part of Project Blind Date from the Newgrounds Festivals Server under Team White Chocolate.
 """)
 
 
